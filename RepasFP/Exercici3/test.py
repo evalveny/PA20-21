@@ -6,10 +6,9 @@ Created on Tue Jan 14 17:03:53 2020
 """
 
 
-import mastermind as m
+import penjat as p
 import sys
 
-sys.stdin = open("test.txt", 'r')
       
 grade = 0
 print ("Grade :=>>", grade)
@@ -18,39 +17,32 @@ print ("Comment :=>> Iniciant test")
 print ("Comment :=>> =============")
 print ("Comment :=>> ")
 
-n_partides = 4
-n_valors = [5, 5, 5, 4]
-max_intents = [10, 10, 10, 5]
-combinacions = ['VVVVV', 'BVERT', 'VBEBB', 'VBVB']
-resultat_esperat = [
-    ['ERROR', 'ERROR', [1], [], [1], [1], [1], [1, 1, 1, 1, 1]],
-    [[0, 0], [1, 0, 0], [0, 0, 0], [0], [0, 0, 0], [0, 0, 0], [0, 0, 0, 0], [1, 0, 0, 0, 0], [1, 0, 0, 0, 0], [1, 1, 1, 0, 0]],
-    [[1, 1, 0], [1], [0, 0], [0], [1, 0, 0, 0], [0, 0, 0], [1, 0, 0, 0], [0, 0, 0], [1, 1, 0, 0, 0], [1, 1, 1, 1, 1]],
-    ['ERROR', [], [1, 1], [], [1, 1, 1], [1, 1, 0, 0]]
-    ]
-final_esperat = [True, False, True, False]
-
-colors_disponibles = {'V':'Vermell', 'B':'Blau', 'T': 'Taronja', 'R':'Rosa',
-                      'E':'vErd', 'M':'Marro', 'G':'Groc', 'N':'Negre'
-                      }
-
+n_partides = 2
+max_errors = [10, 10]
+paraules = ['python', 'python']
+resultat_esperat = [['----o-', 'p---o-', 'p---o-', 'p---on', 'p---on', 'ERROR','p-t-on', 'pyt-on', 'python'],
+                    ['------', '------', '------', '------', '------', '------', '------', '---h--', '---h--', '---h--', '---h--']]
+    
+final_esperat = [True, False]
 
 
 for i in range(n_partides):
     reduccio = 0
     print ("Comment :=>> --------------------")
     print ("Comment :=>> Iniciant PARTIDA", i+1)
-    print ("Comment :=>> Nº valors combinacio: ", n_valors[i])
-    print ("Comment :=>> Màxim intents: ", max_intents[i])
+    print ("Comment :=>> Paraula a endevianr: ", paraules[i])
+    print ("Comment :=>> Màxim errors permesos: ", max_errors[i])
     print ("Comment :=>> --------------------")
     print ("Comment :=>> ")
-    endevinat, llista_combinacions, resultat = m.mastermind(n_valors[i], max_intents[i], list(combinacions[i]), colors_disponibles)
-    
-    print ("Comment :=>> Codi secret a endevinar: ", combinacions[i])
+
+    sys.stdin = open("test" + str(i+1) + ".txt", 'r')
+    endevinat, lletres, resultat = p.juga_penjat(paraules[i], max_errors[i])
+    sys.stdin = sys.__stdin__
+   
     print ("Comment :=>> ")
-    for c, r, re in zip(llista_combinacions, resultat, resultat_esperat[i]):
+    for l, r, re in zip(lletres, resultat, resultat_esperat[i]):
         print ("Comment :=>> --------------")
-        print ("Comment :=>> Combinacio introduïda: ", c)
+        print ("Comment :=>> Lletra introduïda: ", l)
         print ("Comment :=>> ---")
         print ("Comment :=>> Resultat esperat: ", re)
         print ("Comment :=>> ---")
@@ -70,11 +62,9 @@ for i in range(n_partides):
         print ("Comment :=>> ERROR")
         reduccio = reduccio + 1.0
     
-    salt_partida = input()
-    
-    if (reduccio > 5):
-        reduccio = 5
-    grade = grade + (2.5 - reduccio)
+    if (reduccio > 8):
+        reduccio = 8
+    grade = grade + (5 - reduccio)
     print ("Grade :=>>", grade)
         
 
@@ -85,6 +75,5 @@ print ("Comment :=>> ------------------------------------------")
 if (grade == 10.0):
     print ("Comment :=>> Final del test sense errors")
 
-sys.stdin = sys.__stdin__
 
 
