@@ -62,7 +62,7 @@ class Partida:
         i = 0
         for jugador in self.jugadors:
             for j in range(7):
-                jugador.afegeix_fitxa(fitxes[i])
+                jugador.afegeix_fitxa(Fitxa(fitxes[i][0], fitxes[i][1]))
                 i += 1
     
     def juga_torn(self):
@@ -85,7 +85,7 @@ class Partida:
         if self.jugadors[self.jugador_actual].n_fitxes() == 0:
             return self.jugador_actual + 1
         else:
-            return 0
+            return -1
                 
         
 
@@ -93,12 +93,11 @@ def juga_domino(fitxes_inicials):
     joc = Partida()
     joc.inicialitza(fitxes_inicials)
     fitxes_jugades = []
-    guanyador = 0
+    guanyador = -1
     n_torns_bloquejat = 0
-    while n_torns_bloquejat < 4 and guanyador == 0:
+    while n_torns_bloquejat < 4 and guanyador == -1:
         fitxa = joc.juga_torn()
-        print(fitxa.valor1, fitxa.valor2)
-        fitxes_jugades.append(fitxa)
+        fitxes_jugades.append((fitxa.valor1, fitxa.valor2))
         if (fitxa.valor1 == -1):
             n_torns_bloquejat += 1
         else:
@@ -107,9 +106,8 @@ def juga_domino(fitxes_inicials):
         joc.canvia_torn()
     return guanyador, fitxes_jugades
 
-fitxes_inicials = []
-for i in range(7):
-    for j in range(i,7):
-        fitxes_inicials.append(Fitxa(i, j))
+
+    
+
+
         
-guanyador, fitxes_jugades = juga_domino(fitxes_inicials)
