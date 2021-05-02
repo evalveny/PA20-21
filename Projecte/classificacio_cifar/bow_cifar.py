@@ -62,7 +62,6 @@ class Classification:
     def __init__(self):
         self._training = []
         self._bow_extractor = None
-        #self._labels = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
         self._labels = ['airplane', 'horse']
         
     def load_vocabulary(self, file_vocabulary):
